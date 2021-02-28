@@ -11,7 +11,7 @@ export default function Notification({ notification, setNotification }) {
     };
   });
   return (
-    <div className={type}>
+    <div className={`search-notification ${type}`}>
       <p>{text}</p>
     </div>
   );

@@ -16,9 +16,7 @@ export default function Recipe() {
   async function handleMeal() {
     setLoading(true);
     const meal = await getMeal(id);
-    console.log(meal);
     const formattedMeal = formatMeal(meal);
-    console.log(formattedMeal);
     setFormattedMeal(formattedMeal);
     setLoading(false);
   }
@@ -47,8 +45,9 @@ export default function Recipe() {
   }
 
   function convertUrlToEmbeddedUrl(url) {
-    const res = url.split("=");
-    return "https://www.youtube.com/embed/" + res[1];
+    const urlArray = url.split("=");
+    if (!urlArray[1]) return null;
+    return "https://www.youtube.com/embed/" + urlArray[1];
   }
 
   async function getMeal(input) {
@@ -72,32 +71,49 @@ export default function Recipe() {
     video,
   } = formattedMeal;
   return (
-    <article>
-      <h2>{title}</h2>
-      <img src={image} alt="meal" />
-      <h3>Cuisine:</h3>
-      <p>{cuisine}</p>
-      <h3>Category:</h3>
-      <p>{category}</p>
-      <h3>Instructions:</h3>
-      <p>{instructions}</p>
-      <h3>Ingredients:</h3>
-      {ingredients.map((ingredient, index) => {
-        return (
-          <div key={index}>
-            <p>Ingredient: {ingredient.ingredient}</p>
-            <p>Quantity: {ingredient.quantity}</p>
+    <article className="recipe">
+      <div className="recipe-container">
+        <div className="recipe-basic-info">
+          <h2 className="recipe-title">{title}</h2>
+          <h3 className="cuisine">Cuisine</h3>
+          <p>{cuisine}</p>
+          <h3 className="category">Category</h3>
+          <p>{category}</p>
+        </div>
+        <div className="recipe-grid">
+          <img src={image} alt="meal" />
+          <div className="recipe-ingredients">
+            <h3 className="recipe-header">Ingredients</h3>
+            {ingredients.map((ingredient, index) => {
+              return (
+                <div key={index}>
+                  <p>
+                    <span className="ingredient">{ingredient.ingredient}</span>:{" "}
+                    <span className="quantity">{ingredient.quantity}</span>
+                  </p>
+                </div>
+              );
+            })}
           </div>
-        );
-      })}
-      <iframe
-        width="560"
-        height="315"
-        src={video}
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
+          <div className="recipe-instrunctions">
+            <h3 className="recipe-header">Instructions</h3>
+            <p>{instructions}</p>
+          </div>
+        </div>
+        {video && (
+          <div className="container-frame">
+            <iframe
+              className="responsive-iframe"
+              width="560"
+              height="315"
+              src={video}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
+      </div>
     </article>
   );
 }

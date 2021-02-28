@@ -1,8 +1,267 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;700&display=swap");
+
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
 }
 img {
   width: 100%;
 }
-.danger {
-  color: rgb(107, 0, 0);
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.btn {
+  background: rgb(2, 173, 252);
+  color: white;
+  font-size: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.btn:focus,
+.btn:hover {
+  background: rgba(2, 173, 252, 0.8);
+}
+/*navbar*/
+.navbar {
+  height: 80px;
+  background-color: rgb(0, 147, 192);
+}
+.navbar ul {
+  display: flex;
+  justify-content: space-around;
+}
+.navbar a {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  font-size: 2rem;
+  position: relative;
+}
+.navbar a:hover:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 5px;
+  width: 100%;
+  background: white;
+}
+@media only screen and (max-width: 1000px) {
+  .navbar a {
+    font-size: 1.5rem;
+  }
+}
+/*search*/
+.search {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #222;
+  color: rgb(230, 230, 230);
+}
+.search h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+.search-form {
+  height: 2.5rem;
+  width: 50vw;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.search-input {
+  padding: 0.8rem 1rem;
+  height: 100%;
+  font-size: inherit;
+  flex-grow: 1;
+}
+.search-btn {
+  height: 100%;
+  width: 6rem;
+  margin-left: 1rem;
+}
+.search-notification {
+  width: 50vw;
+  margin-top: 1rem;
+  text-align: center;
+  position: absolute;
+  bottom: -2rem;
+}
+.search-notification.danger {
+  color: rgb(255, 35, 20);
+  font-weight: bold;
+}
+/*meals*/
+.meals {
+  background: rgb(230, 230, 230);
+}
+.meals-container {
+  width: 80vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  padding: 3rem 0;
+  text-align: center;
+  margin: auto;
+}
+.meal h2 {
+  background: rgb(20, 20, 20);
+  color: white;
+  padding: 1rem;
+}
+.meal:hover {
+  opacity: 0.8;
+}
+/*error*/
+/*about*/
+.error,
+.about {
+  background: rgb(230, 230, 230);
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.about {
+  padding: 2rem 0;
+}
+.error h1,
+.about h1 {
+  font-size: 3rem;
+}
+.about h1 {
+  margin-bottom: 1rem;
+}
+.about p {
+  width: 80vw;
+  font-size: 1.3rem;
+  line-height: 1.3;
+  text-align: justify;
+}
+@media only screen and (max-width: 1000px) {
+  .about p {
+    font-size: 1.1rem;
+  }
+}
+.error-btn {
+  margin-top: 2rem;
+  padding: 1rem 0.5rem;
+}
+/*loading*/
+.loading {
+  text-align: center;
+  font-size: 4rem;
+  margin-top: 1rem;
+}
+/*recipe*/
+.recipe {
+  background: #222;
+  color: white;
+  padding: 2rem 0;
+  line-height: 1.5;
+  font-size: 1.1rem;
+}
+.recipe-container {
+  width: 80vw;
+  margin: auto;
+}
+.recipe-basic-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.cuisine,
+.category {
+  color: rgb(0, 147, 192);
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.recipe-title {
+  font-size: 2rem;
+  flex-grow: 1;
+}
+.recipe-grid {
+  display: grid;
+  grid-template-columns: auto 2fr;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.recipe img {
+  align-self: center;
+  max-width: 600px;
+  justify-self: center;
+  align-self: center;
+}
+.recipe-header {
+  background: rgb(0, 147, 192);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.recipe-instrunctions {
+  grid-column: 1/-1;
+  text-align: justify;
+}
+.ingredient {
+  font-size: 1.3rem;
+  color: rgb(0, 225, 255);
+}
+.container-frame {
+  --width: 80vw;
+  position: relative;
+  overflow: hidden;
+  width: var(--width);
+  height: calc(0.5625 * var(--width));
+  /*padding-bottom: 56.25%;*/
+  /* proportion value to aspect ratio 16:9 (9 / 16 = 0.5625 or 56.25%) */
+}
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+@media only screen and (max-width: 1000px) {
+  .recipe-grid {
+    grid-template-columns: 1fr;
+  }
+  .recipe img {
+    max-width: 100%;
+  }
+  .recipe-basic-info {
+    display: block;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .cuisine,
+  .category {
+    margin: 0;
+  }
+  .recipe {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .recipe-title {
+    font-size: 1.7rem;
+  }
+  .ingredient {
+    font-size: 1.1rem;
+  }
 }

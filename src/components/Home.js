@@ -5,9 +5,9 @@ import Loading from "./Loading.js";
 
 const URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
 
-export default function Home() {
+export default function Home({ mealsMain, setMealsMain }) {
   const [searchInput, setSearchInput] = useState("");
-  const [mealsMain, setMealsMain] = useState([]);
+
   const [notification, setNotification] = useState({
     notFound: false,
     type: "",
@@ -16,7 +16,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    handleMeals("chicken");
+    if (mealsMain.length === 0) {
+      handleMeals("chicken");
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   async function handleSubmit(e) {
@@ -36,7 +40,6 @@ export default function Home() {
   async function handleMeals(input) {
     setLoading(true);
     const meals = await getMeals(input);
-    console.log(meals);
     setLoading(false);
     if (!meals) {
       setNotification({
@@ -47,6 +50,7 @@ export default function Home() {
       return;
     }
 
+    setNotification({ notFound: false, type: "", text: "" });
     const formattedMealsMain = formatMealsMain(meals);
     setMealsMain(formattedMealsMain);
   }
@@ -71,18 +75,19 @@ export default function Home() {
         <h1>Search Recipes</h1>
         <form className="search-form" onSubmit={(e) => handleSubmit(e)}>
           <input
+            className="search-input"
             type="text"
             value={searchInput}
             placeholder="e.g. chicken"
             onChange={(e) => setSearchInput(e.target.value)}
           ></input>
+          <button className="btn search-btn">Search</button>
           {notification.notFound && (
             <Notification
               notification={notification}
               setNotification={setNotification}
             />
           )}
-          <button>Search</button>
         </form>
       </section>
       {loading ? <Loading /> : <Meals mealsMain={mealsMain} />}

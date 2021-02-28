@@ -6,7 +6,7 @@ export default function Meal({ meal }) {
   return (
     <Link to={`/recipe/${id}`}>
       <article className="meal">
-        <h1>{title}</h1>
+        <h2>{title}</h2>
         <img src={image} alt="meal"></img>
       </article>
     </Link>
