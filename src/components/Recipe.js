@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading.js";
 import { useParams } from "react-router-dom";
+import Error from "./Error.js";
 
 const URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
@@ -22,6 +23,7 @@ export default function Recipe() {
   }
 
   function formatMeal(meal) {
+    if (meal === null) return null;
     const ingredients = [];
     for (let i = 1; i <= 20; i++) {
       if (meal[`strIngredient${i}`]) {
@@ -54,22 +56,20 @@ export default function Recipe() {
     const url = `${URL}${input}`;
     const response = await fetch(url);
     const data = await response.json();
+    if (data.meals === null) {
+      return null;
+    }
     const meals = data.meals[0];
     return meals;
   }
 
   if (loading) {
     return <Loading />;
+  } else if (formattedMeal === null) {
+    return <Error />;
   }
-  const {
-    title,
-    image,
-    cuisine,
-    category,
-    instructions,
-    ingredients,
-    video,
-  } = formattedMeal;
+  const { title, image, cuisine, category, instructions, ingredients, video } =
+    formattedMeal;
   return (
     <article className="recipe">
       <div className="recipe-container">
